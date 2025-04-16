@@ -1,0 +1,9 @@
+Flask
+Flask-Cors
+torch
+torchio
+monai
+requests
+numpy
+pydicom
+pandas
