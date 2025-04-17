@@ -9,7 +9,7 @@ Follow these steps to set up and run the project locally:
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/mkhoobi/MLIntegration.git](https://github.com/mkhoobi/MLIntegration.git)
+git clone https://github.com/mkhoobi/MLIntegration.git
 cd breast_cancer_classification
 ```
 
