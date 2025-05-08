@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 # --- Configuration ---
 ORTHANC_URL = os.getenv("ORTHANC_URL", "http://orthanc:8042")  # Default if not set
 IMAGE_FOLDER = os.getenv("IMAGE_FOLDER", "./images")
-MRI_MODEL_PATH = os.getenv("MODEL_PATH", "./models/resnet18_abrv_b=32_split0-0.pth")
+MRI_MODEL_PATH = os.getenv("MODEL_PATH")
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 os.makedirs(IMAGE_FOLDER, exist_ok=True)
 # --- Augmentations and Transforms ---
@@ -68,8 +68,11 @@ class RandomCropOrPad(tio.CropOrPad):
 
 def load_model():
     model = nets.ResNet("basic", [2, 2, 2, 2], [64, 128, 256, 512], n_input_channels=2, num_classes=1)
-    checkpoint = torch.load(MRI_MODEL_PATH, map_location=torch.device(DEVICE))
-    model.load_state_dict(checkpoint)
+    if MRI_MODEL_PATH:
+        checkpoint = torch.load(MRI_MODEL_PATH, map_location=torch.device(DEVICE))
+        model.load_state_dict(checkpoint)
+    else:
+        print("No model provided, initializing random weights")
     model.to(DEVICE)
     model.eval()
     return model
